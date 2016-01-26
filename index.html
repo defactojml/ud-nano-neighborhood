@@ -2,24 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style type="text/css">
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        #map {
-            height: 100%;
-        }
-    </style>
+    <title>Neighborhood map</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div id="map"></div>
-<script src="js/app.js"></script>
+
+<div id="container">
+    <div id="map"></div>
+</div>
+
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMGV_Z0tYkriVBjO1KjJR646H4EzS2h7A&callback=initMap">
 </script>
+<script src="js/app.js"></script>
+
 </body>
 </html>
