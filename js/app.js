@@ -2,25 +2,29 @@
  * Created by jmlegrand on 26/01/16.
  */
 
-
-
-var myLatLng = {
-  lat: 48.89067,
-  lng: 2.41592
-};
-
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: myLatLng,
-    zoom: 12
+    center: {
+      lat: datas.placeLocation.lat,
+      lng: datas.placeLocation.lng
+    },
+    zoom: 11
   });
 
-  datas.forEach(function (touristPlace) {
+  var locationMarker = new google.maps.Marker({
+    position: new google.maps.LatLng(datas.placeLocation.lat, datas.placeLocation.lng),
+    map: map,
+    title: "my home"
+  });
+  locationMarker.setMap(map);
+
+  datas.touristPlaces.forEach(function (touristPlace) {
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(touristPlace.lat, touristPlace.lng),
       map: map,
-      title: 'Hello World!'
+      title: touristPlace.title
     });
     marker.setMap(map);
   })
+
 }
