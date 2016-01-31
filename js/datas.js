@@ -23,7 +23,7 @@ var datas = {
       "title": 'notre dame'
     }
   ],
-  "placeLocation": {
+  "home": {
     "lat": 48.89067,
     "lng": 2.41592
   }
