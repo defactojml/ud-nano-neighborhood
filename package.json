@@ -1,0 +1,27 @@
+{
+  "name": "ud-nano-neighborhood-map",
+  "version": "1.0.0",
+  "description": "Project #4 in the context of the Udacity Nanodegree program",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/defactojml/ud-nano-neighborhood.git"
+  },
+  "keywords": [
+    "knockout",
+    "mvvm"
+  ],
+  "author": "jmllegrand",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/defactojml/ud-nano-neighborhood/issues"
+  },
+  "homepage": "https://github.com/defactojml/ud-nano-neighborhood#readme",
+  "devDependencies": {
+    "knockout": "^3.4.0",
+    "lodash": "^4.1.0"
+  }
+}
