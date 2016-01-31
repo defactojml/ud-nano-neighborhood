@@ -10,11 +10,15 @@
 
 <div class="container">
     <div class="list">
-        <h2>List of Cats</h2>
+        <h2>List of Tourist Places</h2>
+        <ul data-bind="foreach: {data : touristPlaces}">
+            <li>
+                <a href="#" data-bind="text: $data"></a>
+            </li>
+        </ul>
     </div>
 
     <div id="map" class="detail">
-        <h2>Detail of the Cat selected</h2>
     </div>
 </div>
 

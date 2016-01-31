@@ -16,7 +16,8 @@ h1 {
 h2 {
     color: #678;
     text-shadow: 1px 1px 2px #aaa;
-    font-size: 1.1em
+    font-size: 1.1em;
+    padding-bottom: 2em;
 }
 
 .container {
@@ -33,4 +34,25 @@ h2 {
 .detail {
     width: 80%;
     outline: 1px solid #333;
+}
+
+.list ul {
+    padding-left: 10px;
+    list-style: none;
+}
+
+.list ul li {
+    padding-left: 2em;
+    padding-bottom: 1em;
+    text-indent: -2em;
+}
+
+.list ul li a {
+    text-decoration: none;
+    color: #678;
+}
+
+li:hover {
+    color: red;
+    background: rgba(255, 255, 255, .2);
 }
