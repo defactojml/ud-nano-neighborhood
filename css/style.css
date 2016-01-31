@@ -1,21 +1,36 @@
-/*html, body {
-    height: 100%;
+
+body {
     margin: 0;
-    padding: 0;
+    padding: 10px 40px;
+    background: #fff;
+    font-size: 1.2em;
+    font-family: helvetica, arial, serif;
 }
 
-#map {
-    height: 100%;
+h1 {
+    color: #345;
+    text-shadow: 1px 1px 2px #aaa;
+    font-size: 1.8em
 }
-*/
 
-html, body {
-    height: 100%;
+h2 {
+    color: #678;
+    text-shadow: 1px 1px 2px #aaa;
+    font-size: 1.1em
+}
+
+.container {
+    display: -webkit-flex;
+    display: flex;
+    height: 800px;
+}
+
+.list {
+    width: 20%;
+    outline: 1px solid #333;
+}
+
+.detail {
     width: 80%;
+    outline: 1px solid #333;
 }
-
-#map, #container {
-    height: 100%;
-    width: 80%;
-}
-
