@@ -43,12 +43,33 @@ function initMap() {
 
 }
 
+var Place = function (data) {
+  this.name = data.title;
+  this.visibility = true;
+}
+
 var ViewModel = function () {
   var self = this;
   this.touristPlaces = ko.observableArray([]);
+  this.filterText = ko.observable("");
+
   datas.touristPlaces.forEach(function (place) {
-    self.touristPlaces.push(place.title)
+    self.touristPlaces.push(new Place(place))
   });
+
+  this.filteredPlaces = ko.computed(function () {
+    if (!self.filterText().toLowerCase()) {
+      self.touristPlaces.forEach(function (place) {
+        place.visibility = true;
+      });
+    } else {
+      self.touristPlaces.forEach(function (place) {
+        var name = place.name.toLowerCase();
+
+      })
+    }
+  })
+
 };
 
 ko.applyBindings(new ViewModel());

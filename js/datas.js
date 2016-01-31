@@ -4,7 +4,7 @@ var datas = {
     {
       "lat": "48.86342",
       "lng": "2.26189",
-      "title": 'Stade Roland Garros'
+      "title": 'Roland Garros'
     }, {
       "lat": "48.86418",
       "lng": "2.34250",
@@ -21,6 +21,31 @@ var datas = {
       "lat": "48.85273",
       "lng": "2.35056",
       "title": 'Notre Dame de Paris'
+    },
+    {
+      "lat": "48.804865",
+      "lng": "2.120355",
+      "title": 'Chateau de Versailles'
+    },
+    {
+      "lat": "48.833832",
+      "lng": "2.332422",
+      "title": 'Catacombes de Paris'
+    },
+    {
+      "lat": "48.873779",
+      "lng": "2.295016",
+      "title": 'Arc de Triomphe'
+    },
+    {
+      "lat": "48.871953",
+      "lng": "2.775924",
+      "title": 'Disneyland Paris'
+    },
+    {
+      "lat": "48.842568",
+      "lng": "2.435494",
+      "title": 'Chateau de Vincennes'
     }
   ],
   "home": {

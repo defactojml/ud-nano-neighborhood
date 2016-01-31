@@ -9,11 +9,17 @@
 
 
 <div class="container">
+
     <div class="list">
         <h2>List of Tourist Places</h2>
-        <ul data-bind="foreach: {data : touristPlaces}">
+
+        <div class="filter">
+            <input type="text" placeholder="Find your place ..." data-bind="textInput: filterText"/>
+        </div>
+
+        <ul data-bind="foreach: {data: touristPlaces}">
             <li>
-                <a href="#" data-bind="text: $data"></a>
+                <a href="#" data-bind="text: $data.name, visible:  $data.visibility"></a>
             </li>
         </ul>
     </div>
