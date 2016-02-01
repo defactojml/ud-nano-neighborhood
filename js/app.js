@@ -46,7 +46,7 @@ function initMap() {
 var Place = function (data) {
   this.name = data.title;
   this.visibility = true;
-}
+};
 
 var ViewModel = function () {
   var self = this;
@@ -58,7 +58,8 @@ var ViewModel = function () {
   });
 
   this.filteredPlaces = ko.computed(function () {
-    if (!self.filterText().toLowerCase()) {
+    // WIP
+    /*if (!self.filterText().toLowerCase()) {
       self.touristPlaces.forEach(function (place) {
         place.visibility = true;
       });
@@ -67,7 +68,7 @@ var ViewModel = function () {
         var name = place.name.toLowerCase();
 
       })
-    }
+     }*/
   })
 
 };
