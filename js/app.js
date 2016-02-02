@@ -53,23 +53,29 @@ var ViewModel = function () {
   this.touristPlaces = ko.observableArray([]);
   this.filterText = ko.observable("");
 
+  // we initialize the observableArray from datas
   datas.touristPlaces.forEach(function (place) {
     self.touristPlaces.push(new Place(place))
   });
 
   this.filteredPlaces = ko.computed(function () {
-    // WIP
-    /*if (!self.filterText().toLowerCase()) {
-      self.touristPlaces.forEach(function (place) {
+    // anytime the input field is reinitialized, we set visibility for all ...
+    var filterText = self.filterText().toLowerCase();
+    if (!filterText) {
+      self.touristPlaces().forEach(function (place) {
         place.visibility = true;
       });
     } else {
-      self.touristPlaces.forEach(function (place) {
-        var name = place.name.toLowerCase();
-
+      self.touristPlaces().forEach(function (place) {
+        // find if the search input is contained in the name of the place
+        if (place.name.toLowerCase().indexOf(filterText) > -1) {
+          place.visibility = true;
+        } else {
+          place.visibility = false;
+        }
       })
-     }*/
-  })
+    }
+  }, self);
 
 };
 
