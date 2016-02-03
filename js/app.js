@@ -25,14 +25,14 @@ function initMap() {
   locationMarker.setMap(map);
 
   // create a marker for each and every tourist place and add them to the map
-  datas.touristPlaces.forEach(function (touristPlace) {
+  datas.touristPlaces.forEach(function(touristPlace) {
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(touristPlace.lat, touristPlace.lng),
       map: map,
       title: touristPlace.title
     });
     marker.setMap(map);
-    marker.addListener('click', function () {
+    marker.addListener('click', function() {
       if (!_.isEmpty(marker.getAnimation()) || marker.getAnimation() === 1) {
         marker.setAnimation(null);
       } else {
@@ -43,40 +43,33 @@ function initMap() {
 
 }
 
-var Place = function (data) {
+var Place = function(data) {
   this.name = data.title;
-  this.visibility = true;
 };
 
-var ViewModel = function () {
+var ViewModel = function() {
   var self = this;
   this.touristPlaces = ko.observableArray([]);
   this.filterText = ko.observable("");
 
   // we initialize the observableArray from datas
-  datas.touristPlaces.forEach(function (place) {
+  datas.touristPlaces.forEach(function(place) {
     self.touristPlaces.push(new Place(place))
   });
 
-  this.filteredPlaces = ko.computed(function () {
-    // anytime the input field is reinitialized, we set visibility for all ...
+  this.touristPlacesFiltered = ko.computed(function() {
     var filterText = self.filterText().toLowerCase();
+    // no filtering, the full array is returned
     if (!filterText) {
-      self.touristPlaces().forEach(function (place) {
-        place.visibility = true;
-      });
-    } else {
-      self.touristPlaces().forEach(function (place) {
-        // find if the search input is contained in the name of the place
-        if (place.name.toLowerCase().indexOf(filterText) > -1) {
-          place.visibility = true;
-        } else {
-          place.visibility = false;
-        }
+      return self.touristPlaces();
+    }
+    // when a filter has been set, we filter using plain js (with lodash)
+    else {
+      return _.filter(self.touristPlaces(), function(place) {
+        return (place.name.toLowerCase().indexOf(filterText) > -1);
       })
     }
-  }, self);
-
+  });
 };
 
 ko.applyBindings(new ViewModel());
