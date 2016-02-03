@@ -8,8 +8,18 @@ SOLVED
 How to you link the updated arrays with the list of markers (not part of the view model) ...
 
 **Question 3**
-I keep getting this error. Why is this happening?
-How can I handle the error gracefully?
+I keep getting the following error despite handling the errors. Why is this happening?
+
+
 '''
 Uncaught InvalidValueError: initMap is not a function
+Uncaught TypeError: Cannot read property 'setMap' of undefined
+'''
+
+'''
+<script async
+        defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMGV_Z0tYkriVBjO1KjJR646H4EzS2h7A&callback=initMap"
+        onerror="mapError">
+</script>
 '''
