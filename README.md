@@ -36,7 +36,7 @@ This project is still a work-in-progress
 
 - Display a list view of the set of locations: DONE
 
-- Provide a filter option that uses an input field to filter both the list view and the map markers: WIP
+- Provide a filter option that uses an input field to filter both the list view and the map markers: DONE
 
 - Add functionality using third-party APIs to provide information when a map marker or list view entry is clicked: WIP (with flickr)
 

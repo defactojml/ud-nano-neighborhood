@@ -6,97 +6,74 @@
 // var ko = require('knockout');
 // var _ = require('lodash');
 
+
 var map;
 
 function initMap() {
   // instantiate the map object
   map = new google.maps.Map(document.getElementById('map'), {
     center: {
-      lat: datas.home.lat,
-      lng: datas.home.lng
+      lat: 48.852729,
+      lng: 2.350564
     },
     zoom: 11
   });
 
-  // create a dedicated marker to add the place i currently live
-  var locationMarker = new google.maps.Marker({
-    position: new google.maps.LatLng(datas.home.lat, datas.home.lng),
-    map: map,
-    title: "my home"
-  });
-  locationMarker.setMap(map);
-
-  // create a marker for each and every tourist place and add them to the map
-  /*_.forEach(datas.touristPlaces, function(touristPlace){
-
-   var marker = new google.maps.Marker({
-   position: new google.maps.LatLng(touristPlace.lat, touristPlace.lng),
-   map: map,
-   title: touristPlace.title
-   });
-   marker.setMap(map);
-   marker.addListener('click', function() {
-   if (!_.isEmpty(marker.getAnimation()) || marker.getAnimation() === 1) {
-   marker.setAnimation(null);
-   } else {
-   marker.setAnimation(google.maps.Animation.BOUNCE);
-   }
-   });
-   })*/
-
+  ko.applyBindings(new ViewModel());
 }
 
-(function() {
+var Place = function (data) {
+  this.name = data.title;
+  this.marker = new google.maps.Marker({
+    position: new google.maps.LatLng(data.lat, data.lng),
+    map: map,
+    title: data.title
+  });
+};
 
-  var Place = function(data) {
-    this.name = data.title;
-    this.marker = new google.maps.Marker({
-      position: new google.maps.LatLng(data.lat, data.lng),
-      map: map,
-      title: data.title
-    });
-  };
+var ViewModel = function () {
+  var self = this;
+  this.touristPlaces = ko.observableArray([]);
+  this.filterText = ko.observable("");
 
-  var ViewModel = function() {
-    var self = this;
-    this.touristPlaces = ko.observableArray([]);
-    this.filterText = ko.observable("");
-
-    // we initialize the observableArray from datas
-    datas.touristPlaces.forEach(function(place) {
-      self.touristPlaces.push(new Place(place));
-      place.marker.setMap(map);
-      /*marker.addListener('click', function() {
-       if (!_.isEmpty(marker.getAnimation()) || marker.getAnimation() === 1) {
-       marker.setAnimation(null);
-       } else {
-       marker.setAnimation(google.maps.Animation.BOUNCE);
-       }
-       });*/
-    });
-
-
-    this.touristPlacesFiltered = ko.computed(function() {
-      var filterText = self.filterText().toLowerCase();
-      // no filtering, the full array is returned
-      if (!filterText) {
-        return self.touristPlaces();
-      }
-      // when a filter has been set, we filter using plain js (with lodash)
-      else {
-        return _.filter(self.touristPlaces(), function(place) {
-          return (place.name.toLowerCase().indexOf(filterText) > -1);
-        })
+  // we initialize the observableArray from datas
+  _.forEach(datas, function (_place) {
+    var place = new Place(_place);
+    self.touristPlaces.push(place);
+    place.marker.setMap(map);
+    place.marker.addListener('click', function () {
+      if (!_.isEmpty(place.marker.getAnimation()) || place.marker.getAnimation() === 1) {
+        place.marker.setAnimation(null);
+      } else {
+        place.marker.setAnimation(google.maps.Animation.BOUNCE);
       }
     });
-  };
-
-  ko.applyBindings(new ViewModel());
-
-}());
+  });
 
 
-var mapError = function(){
+  this.touristPlacesFiltered = ko.computed(function () {
+    var filterText = self.filterText().toLowerCase();
+    // no filtering, the full array is returned
+    if (!filterText) {
+      return self.touristPlaces();
+    }
+    // when a filter has been set, we filter using plain js (with lodash)
+    else {
+      return _.filter(self.touristPlaces(), function (place) {
+        var predicate = place.name.toLowerCase().indexOf(filterText) > -1;
+        if (predicate) {
+          place.marker.setVisible(true);
+        } else {
+          place.marker.setVisible(false);
+        }
+        return predicate;
+      })
+    }
+  });
+};
+
+
+var mapError = function () {
   document.getElementById('map').html('<h5>Unable to load google maps, please try again later</h5>');
 };
 
