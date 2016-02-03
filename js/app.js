@@ -25,7 +25,8 @@ function initMap() {
   locationMarker.setMap(map);
 
   // create a marker for each and every tourist place and add them to the map
-  datas.touristPlaces.forEach(function(touristPlace) {
+  _.forEach(datas.touristPlaces, function(touristPlace){
+
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(touristPlace.lat, touristPlace.lng),
       map: map,
