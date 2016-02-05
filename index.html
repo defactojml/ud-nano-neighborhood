@@ -18,7 +18,7 @@
         </div>
 
         <ul data-bind="foreach: {data: touristPlacesFiltered}">
-            <li data-bind="text: $data.name"></li>
+            <li data-bind="text: $data.name, click: $parent.changePlace"></li>
         </ul>
     </div>
 

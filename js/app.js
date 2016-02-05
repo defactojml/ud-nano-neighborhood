@@ -70,6 +70,11 @@ var ViewModel = function () {
       })
     }
   });
+
+  this.currentPlace = ko.observable("");
+  this.changePlace = function(place) {
+    self.currentPlace = place;
+  }
 };
 
 
