@@ -5,15 +5,14 @@ If the filter works (setting visibillity property to on/off) the view is not upd
 SOLVED
 
 **Question 2**
-How to you link the updated arrays with the list of markers (not part of the view model) ...
+How to you link the filtered arrays with the list of markers (not part of the view model) ...
+SOLVED
 
 **Question 3**
 I keep getting the following error despite handling the errors. Why is this happening?
 
-
 '''
 Uncaught InvalidValueError: initMap is not a function
-Uncaught TypeError: Cannot read property 'setMap' of undefined
 '''
 
 '''
