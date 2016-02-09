@@ -11,14 +11,7 @@ var map, infowindow;
 
 function initMap() {
   // instantiate the map object
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {
-      lat: 48.852729,
-      lng: 2.350564
-    },
-    zoom: 11
-  });
-
+  map = new google.maps.Map(document.getElementById('map'), mapsOptions);
   ko.applyBindings(new ViewModel());
 }
 
