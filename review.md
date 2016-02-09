@@ -22,3 +22,24 @@ Uncaught InvalidValueError: initMap is not a function
         onerror="mapError">
 </script>
 '''
+
+**Question 4**
+What would be the step to use the following declaration
+'''
+var ko = require('knockout');
+var _ = require('lodash');
+'''
+
+instead of explicitely doing
+
+'''
+<script src="js/lib/lodash.js"></script>
+<script src="js/lib/knockout-3.2.0.js"></script>
+<script src="js/datas.js"></script>
+<script src="js/app.js"></script>
+'''
+
+I have already a package.json
+a npm install would create the node_module
+
+What elese?
