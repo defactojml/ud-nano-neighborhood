@@ -46,3 +46,12 @@ var datas = [
     "lng": "2.435494",
     "title": 'Chateau de Vincennes'
   }];
+
+
+var mapsOptions = {
+  center : {
+    lat: 48.852729,
+    lng: 2.350564
+  },
+  zoom: 11
+};

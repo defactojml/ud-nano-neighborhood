@@ -7,18 +7,11 @@
 // var _ = require('lodash');
 
 
-var map;
+var map, infowindow;
 
 function initMap() {
   // instantiate the map object
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {
-      lat: 48.852729,
-      lng: 2.350564
-    },
-    zoom: 11
-  });
-
+  map = new google.maps.Map(document.getElementById('map'), mapsOptions);
   ko.applyBindings(new ViewModel());
 }
 
@@ -72,11 +65,19 @@ var ViewModel = function () {
   });
 
   this.currentPlace = ko.observable("");
+
   this.changePlace = function(place) {
-    self.currentPlace = place;
+    // close the infowindow whenever we click on another place
+    if (!_.isEmpty(infowindow)) {
+      infowindow.close();
+    }
+    self.currentPlace(place);
+    infowindow = new google.maps.InfoWindow({
+      content:  '<p>Hello World <b>Jean-Michel</b><p>'
+    });
+    infowindow.open(map, self.currentPlace().marker);
   }
 };
-
 
 var mapError = function () {
   document.getElementById('map').html('<h5>Unable to load google maps, please try again later</h5>');
