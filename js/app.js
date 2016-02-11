@@ -7,14 +7,15 @@
 // var _ = require('lodash');
 
 
-var map, infowindow;
+
+// constants used during the flickr query
 var MAX_NUMBER = 10;
 var TAG_MODE = 'and';
 var API_KEY = 'b3bdddc89ecc48e025bfad40ac785142';
 var RADIUS = 2;
-
 var FILTERED_KEYWORDS = ['Le', 'du', 'de'];
 
+var map, infowindow;
 
 function initMap() {
   // instantiate the map object
@@ -37,18 +38,25 @@ var ViewModel = function() {
   this.touristPlaces = ko.observableArray([]);
   this.filterText = ko.observable("");
 
-  // we initialize the observableArray from datas
   _.forEach(datas, function(_place) {
 
-    var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + API_KEY + '&tags=' + _place.title + '&tag_mode=' + TAG_MODE + '&lat=' + _place.lat + '&lon=' + _place.lng + '&radius=' + RADIUS + '&radius_units=km&format=json&nojsoncallback=1';
-    console.log(url);
+    // build an array of string based on the title of the place
+    // filter the array to remove keyword
     var tags = _.filter(_.words(_place.title), function(tag) {
       return !_.includes(FILTERED_KEYWORDS, tag);
     });
 
+    // build the url that will be used
+    var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + API_KEY +
+      '&tags=' + _place.title + '&tag_mode=' + TAG_MODE + '&lat=' + _place.lat + '&lon=' + _place.lng +
+      '&radius=' + RADIUS + '&radius_units=km&format=json&nojsoncallback=1';
+
+    console.log(url);
+
+
     $.getJSON(url)
       .success(function(datas) {
-        //loop through the results with the following function
+        //filter out of all the results
         var filteredData = _.filter(datas.photos.photo, function(photo) {
           // check if title is different from ""
           if (!_.isEmpty(photo.title)) {
