@@ -22,7 +22,7 @@ function initMap() {
   ko.applyBindings(new ViewModel());
 }
 
-var Place = function (data) {
+var Place = function(data) {
   this.name = data.title;
   this.marker = new google.maps.Marker({
     position: new google.maps.LatLng(data.lat, data.lng),
@@ -32,13 +32,13 @@ var Place = function (data) {
 };
 
 
-var ViewModel = function () {
+var ViewModel = function() {
   var self = this;
   this.touristPlaces = ko.observableArray([]);
   this.filterText = ko.observable("");
 
   // we initialize the observableArray from datas
-  _.forEach(datas, function (_place) {
+  _.forEach(datas, function(_place) {
 
     var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + API_KEY + '&tags=' + _place.title + '&tag_mode=' + TAG_MODE + '&lat=' + _place.lat + '&lon=' + _place.lng + '&radius=' + RADIUS + '&radius_units=km&format=json&nojsoncallback=1';
     console.log(url);
@@ -47,31 +47,31 @@ var ViewModel = function () {
     });
 
     $.getJSON(url)
-      .success(function (datas) {
+      .success(function(datas) {
         //loop through the results with the following function
-        var filteredData = _.filter(datas.photos.photo, function (photo) {
+        var filteredData = _.filter(datas.photos.photo, function(photo) {
           // check if title is different from ""
           if (!_.isEmpty(photo.title)) {
             // tranform string into array
             var words = _.words(photo.title);
-            return _.isEqual((_.filter(tags, function (tag) {
-              return (_.findIndex(words, function (word) {
+            return _.isEqual((_.filter(tags, function(tag) {
+              return (_.findIndex(words, function(word) {
                 return word === tag
               }) !== -1);
             })), tags);
           }
         });
         console.log('number of pics found for', _place.title, filteredData.length);
-        var photoSelected =(filteredData.length > 0) ?
+        var photoSelected = (filteredData.length > 0) ?
           ((filteredData.length >= 10) ?
-          _.slice(filteredData, filteredData.length - MAX_NUMBER)[_.random(0, MAX_NUMBER - 1)] :
-          filteredData[_.random(0, filteredData.length - 1)]) : datas.photos.photo[_.random(0, datas.photos.photo.length - 1)];
+            _.slice(filteredData, filteredData.length - MAX_NUMBER)[_.random(0, MAX_NUMBER - 1)] :
+            filteredData[_.random(0, filteredData.length - 1)]) : datas.photos.photo[_.random(0, datas.photos.photo.length - 1)];
         console.log('photo selected for', _place.title, photoSelected);
 
         var place = new Place(_place);
         self.touristPlaces.push(place);
         place.marker.setMap(map);
-        place.marker.addListener('click', function () {
+        place.marker.addListener('click', function() {
           if (!_.isEmpty(place.marker.getAnimation()) || place.marker.getAnimation() === 1) {
             place.marker.setAnimation(null);
           } else {
@@ -80,7 +80,7 @@ var ViewModel = function () {
         });
         place.photo = photoSelected;
       })
-      .fail(function (e) {
+      .fail(function(e) {
         console.log('nooooo...%o', e)
       });
     console.log('sent');
@@ -88,7 +88,7 @@ var ViewModel = function () {
   });
 
 
-  this.touristPlacesFiltered = ko.computed(function () {
+  this.touristPlacesFiltered = ko.computed(function() {
     var filterText = self.filterText().toLowerCase();
     // no filtering, the full array is returned
     if (!filterText) {
@@ -96,7 +96,7 @@ var ViewModel = function () {
     }
     // when a filter has been set, we filter using plain js (with lodash)
     else {
-      return _.filter(self.touristPlaces(), function (place) {
+      return _.filter(self.touristPlaces(), function(place) {
         var predicate = place.name.toLowerCase().indexOf(filterText) > -1;
         if (predicate) {
           place.marker.setVisible(true);
@@ -116,14 +116,16 @@ var ViewModel = function () {
       infowindow.close();
     }
     self.currentPlace(place);
+    var staticUrl = 'https://farm' + place.photo.farm + '.staticflickr.com/'
+      + place.photo.server + '/' + place.photo.id + '_' + place.photo.secret + '_m.jpg';
     infowindow = new google.maps.InfoWindow({
-      content: '<p>' + self.currentPlace().photo.title + '</p>'
+      content: '<img src=' + staticUrl + '>'
     });
     infowindow.open(map, self.currentPlace().marker);
   }
 };
 
-var mapError = function () {
+var mapError = function() {
   document.getElementById('map').html('<h5>Unable to load google maps, please try again later</h5>');
 };
 
