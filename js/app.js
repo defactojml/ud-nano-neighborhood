@@ -13,6 +13,8 @@ var TAG_MODE = 'and';
 var API_KEY = 'b3bdddc89ecc48e025bfad40ac785142';
 var RADIUS = 2;
 
+var FILTERED_KEYWORDS = ['Le', 'du', 'de'];
+
 
 function initMap() {
   // instantiate the map object
@@ -40,7 +42,10 @@ var ViewModel = function () {
 
     var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + API_KEY + '&tags=' + _place.title + '&tag_mode=' + TAG_MODE + '&lat=' + _place.lat + '&lon=' + _place.lng + '&radius=' + RADIUS + '&radius_units=km&format=json&nojsoncallback=1';
     console.log(url);
-    var tags = _.words(_place.title);
+    var tags = _.filter(_.words(_place.title), function(tag) {
+      return !_.includes(FILTERED_KEYWORDS, tag);
+    });
+
     $.getJSON(url)
       .success(function (datas) {
         //loop through the results with the following function
@@ -57,7 +62,10 @@ var ViewModel = function () {
           }
         });
         console.log('number of pics found for', _place.title, filteredData.length);
-        var photoSelected = _.slice(filteredData, filteredData.length - MAX_NUMBER)[_.random(0, MAX_NUMBER - 1)];
+        var photoSelected =(filteredData.length > 0) ?
+          ((filteredData.length >= 10) ?
+          _.slice(filteredData, filteredData.length - MAX_NUMBER)[_.random(0, MAX_NUMBER - 1)] :
+          filteredData[_.random(0, filteredData.length - 1)]) : datas.photos.photo[_.random(0, datas.photos.photo.length - 1)];
         console.log('photo selected for', _place.title, photoSelected);
 
         var place = new Place(_place);
