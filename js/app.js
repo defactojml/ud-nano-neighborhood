@@ -27,41 +27,7 @@ var Place = function (data) {
     map: map,
     title: data.title
   });
-  this.photo = getPhoto(data);
 };
-
-
-function getPhoto(data) {
-
-  var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + API_KEY + '&tags=' + data.title + '&tag_mode=' + TAG_MODE + '&lat=' + data.lat + '&lon=' + data.lng + '&radius=' + RADIUS + '&radius_units=km&format=json&nojsoncallback=1';
-  console.log(url);
-  var tags = _.words(data.title);
-  $.getJSON(url)
-    .success(function (datas) {
-      //loop through the results with the following function
-      var filteredData = _.filter(datas.photos.photo, function (photo) {
-        // check if title is different from ""
-        if (!_.isEmpty(photo.title)) {
-          // tranform string into array
-          var words = _.words(photo.title);
-          return _.isEqual((_.filter(tags, function (tag) {
-            return (_.findIndex(words, function (word) {
-              return word === tag
-            }) === -1) ? false : true;
-          })), tags);
-        }
-      });
-      console.log('number of pics found for', data.title, filteredData.length);
-      var photoSelected = _.slice(filteredData, filteredData.length - MAX_NUMBER)[_.random(0, MAX_NUMBER - 1)];
-      console.log('photo selected for', data.title, photoSelected);
-      return photoSelected;
-    })
-    .fail(function (e) {
-      console.log('nooooo...%o', e)
-    });
-  console.log('sent');
-
-}
 
 
 var ViewModel = function () {
@@ -71,16 +37,46 @@ var ViewModel = function () {
 
   // we initialize the observableArray from datas
   _.forEach(datas, function (_place) {
-    var place = new Place(_place);
-    self.touristPlaces.push(place);
-    place.marker.setMap(map);
-    place.marker.addListener('click', function () {
-      if (!_.isEmpty(place.marker.getAnimation()) || place.marker.getAnimation() === 1) {
-        place.marker.setAnimation(null);
-      } else {
-        place.marker.setAnimation(google.maps.Animation.BOUNCE);
-      }
-    });
+
+    var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + API_KEY + '&tags=' + _place.title + '&tag_mode=' + TAG_MODE + '&lat=' + _place.lat + '&lon=' + _place.lng + '&radius=' + RADIUS + '&radius_units=km&format=json&nojsoncallback=1';
+    console.log(url);
+    var tags = _.words(_place.title);
+    $.getJSON(url)
+      .success(function (datas) {
+        //loop through the results with the following function
+        var filteredData = _.filter(datas.photos.photo, function (photo) {
+          // check if title is different from ""
+          if (!_.isEmpty(photo.title)) {
+            // tranform string into array
+            var words = _.words(photo.title);
+            return _.isEqual((_.filter(tags, function (tag) {
+              return (_.findIndex(words, function (word) {
+                return word === tag
+              }) !== -1);
+            })), tags);
+          }
+        });
+        console.log('number of pics found for', _place.title, filteredData.length);
+        var photoSelected = _.slice(filteredData, filteredData.length - MAX_NUMBER)[_.random(0, MAX_NUMBER - 1)];
+        console.log('photo selected for', _place.title, photoSelected);
+
+        var place = new Place(_place);
+        self.touristPlaces.push(place);
+        place.marker.setMap(map);
+        place.marker.addListener('click', function () {
+          if (!_.isEmpty(place.marker.getAnimation()) || place.marker.getAnimation() === 1) {
+            place.marker.setAnimation(null);
+          } else {
+            place.marker.setAnimation(google.maps.Animation.BOUNCE);
+          }
+        });
+        place.photo = photoSelected;
+      })
+      .fail(function (e) {
+        console.log('nooooo...%o', e)
+      });
+    console.log('sent');
+
   });
 
 
