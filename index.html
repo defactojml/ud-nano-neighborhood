@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Neighborhood map</title>
+    <title>Paris Tourist Attractions map</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -11,14 +11,14 @@
 <div class="container">
 
     <div class="list">
-        <h2>List of Tourist Places</h2>
+        <h2>List of Tourist Attractions</h2>
 
         <div class="filter">
             <input type="text" placeholder="Search ... " data-bind="textInput: filterText"/>
         </div>
 
-        <ul data-bind="foreach: {data: touristPlacesFiltered}">
-            <li data-bind="text: $data.name, click: $parent.changePlace"></li>
+        <ul data-bind="foreach: {data: filteredTouristAttractions}">
+            <li data-bind="text: $data.marker.title, click: $parent.changeTouristAttraction"></li>
         </ul>
     </div>
 

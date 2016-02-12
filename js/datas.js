@@ -1,4 +1,7 @@
 // mocked json file
+
+'use strict';
+
 var datas = [
   {
     lat: "48.86342",
