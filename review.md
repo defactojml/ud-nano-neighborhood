@@ -24,6 +24,8 @@ Uncaught InvalidValueError: initMap is not a function
         onerror="mapError">
 </script>
 ```
+SOLVED
+
 
 **Question 4**
 
@@ -46,4 +48,4 @@ instead of explicitely doing
 I have already a package.json
 a npm install would create the node_module
 
-What else?
+TODO
