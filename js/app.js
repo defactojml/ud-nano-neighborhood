@@ -40,6 +40,10 @@ var ViewModel = function() {
   var self = this;
   this.mapElements = ko.observableArray([]);
   this.filterText = ko.observable("");
+  this.currentTouristAttraction = ko.observable("");
+  this.previousTouristAttraction = ko.observable("");
+
+
 
   _.forEach(datas, function(touristAttraction) {
 
@@ -119,7 +123,7 @@ var ViewModel = function() {
     }
   });
 
-  this.currentTouristAttraction = ko.observable("");
+
 
   this.changeTouristAttraction = function(mapElement) {
     setInfoWindowContent(self, mapElement);
@@ -129,15 +133,18 @@ var ViewModel = function() {
 
 function setInfoWindowContent(self, mapElement) {
   if (!_.isEmpty(infowindow)) {
+    self.previousTouristAttraction().marker.setAnimation(null);
     infowindow.close();
   }
+  mapElement.marker.setAnimation(google.maps.Animation.BOUNCE);
   self.currentTouristAttraction(mapElement);
   var staticUrl = 'https://farm' + mapElement.photo.farm + '.staticflickr.com/'
     + mapElement.photo.server + '/' + mapElement.photo.id + '_' + mapElement.photo.secret + '_m.jpg';
   infowindow = new google.maps.InfoWindow({
-    content: '<img src=' + staticUrl + '>'
+    content: '<figure><img src=' + staticUrl + '> <figcaption>' + mapElement.photo.title + '</figcaption></figure>'
   });
   infowindow.open(map, self.currentTouristAttraction().marker);
+  self.previousTouristAttraction(mapElement);
 }
 
 
