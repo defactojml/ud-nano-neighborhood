@@ -24,13 +24,16 @@ This project is developed using :
 Specifics about the project
 -------------
 There was a focus during implementation to return only relvant flick photos
+
 The implementation is the following:
 
-- The name of the tourist places are translated into tags for the flickr API
+- The name of the tourist place are translated into tags for the flickr API
 
-- all the tags should be found in the resulting http request
+- A initial request is made using flickr.photos.search with results
 
-- out of this filtered structure, a maw number of photos is saved (check the constant MAX_NUMBER)
+- for each successful element initially returned, we check that all the tags are found in the title of the element
+
+- out of this filtered structure, we take the first MAX_NUMBER elements (check the constant MAX_NUMBER)
 
 - a photo is selected randomnly out of the MAX_NUMBER elements
 
