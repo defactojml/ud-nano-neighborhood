@@ -12,11 +12,28 @@ Technology
 -------------
 This project is developed using :
 
- - Vanilla js
- 
- - KnockoutJS
+ - knockoutJS
+
+ - lodash
+
+ - jquery
 
 ----------
+
+
+Specifics about the project
+-------------
+There was a focus during implementation to return only relvant flick photos
+The implementation is the following:
+
+- The name of the tourist places are translated into tags for the flickr API
+
+- all the tags should be found in the resulting http request
+
+- out of this filtered structure, a maw number of photos is saved (check the constant MAX_NUMBER)
+
+- a photo is selected randomnly out of the MAX_NUMBER elements
+
 
 
 How-To
